@@ -1,11 +1,11 @@
-const { buildQuery } = require("./utils");
+const { buildQuery, headerToBytes } = require("./utils");
 const dgram = require("dgram");
 
 const query = buildQuery("www.example.com", 1);
 
 const socket = dgram.createSocket("udp4");
 
-socket.bind(12345);
+// socket.bind(53);
 
 socket.send(query, 53, "8.8.8.8", (err) => {
   if (err) console.error(err);

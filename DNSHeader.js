@@ -2,10 +2,10 @@ class DNSHeader {
   constructor(
     id,
     flags,
-    num_Questions,
-    numAnswers,
-    numAuthorities,
-    numAdditionals
+    num_Questions = 0,
+    numAnswers = 0,
+    numAuthorities = 0,
+    numAdditionals = 0
   ) {
     this.id = id;
     this.flags = flags;

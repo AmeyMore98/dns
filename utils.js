@@ -1,13 +1,21 @@
 const DNSHeader = require("./DNSHeader");
 const DNSQuestion = require("./DNSQuestion");
-const struct = require("./struct");
+const struct = require("python-struct");
 
+/**
+ *
+ * @param {DNSHeader} header
+ * @returns
+ */
 function headerToBytes(header) {
-  return struct(">HHHHHH").pack(...header.getValues());
+  return struct.pack(">HHHHHH", ...header.getValues()).toString("binary");
 }
 
 function questionToBytes(question) {
-  return question.name + struct(">HH").pack(question.type, question.class_);
+  return (
+    question.name +
+    struct.pack(">HH", question.type, question.class_).toString("binary")
+  );
 }
 
 function encodeDnsName(domainName) {
@@ -26,6 +34,7 @@ function buildQuery(domainName, recordType) {
 
   // Random number between 0 and 65535
   const id = Math.floor(Math.random() * 65536);
+
   RECURSION_DESIRED = 1 << 8;
 
   const header = new DNSHeader(id, RECURSION_DESIRED, 1);
